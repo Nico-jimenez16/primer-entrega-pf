@@ -2,7 +2,7 @@
   <div id="app">
     <Header></Header>
     <Productos :productos="productos" :imgfavorito="imgfavorito" @agregar-al-carrito="AgregarProducto"></Productos>
-    <Carrito :productoCarrito="productoCarrito" :cantidad="cantidad"></Carrito>
+    <Carrito :productoCarrito="productoCarrito" :cantidadcarrito="cantidadcarrito"></Carrito>
   </div>
 </template>
 
@@ -22,7 +22,7 @@ export default {
   data(){
     return {
         productoCarrito: [],
-        cantidad: 0,
+        cantidadcarrito: 0,
         imgfavorito: 'fav.png',
         productos:
         [
@@ -32,7 +32,8 @@ export default {
               descripcion: 'Hamburguesa clasica',
               precio: 100,
               disponibilidad: true,
-              favorito: true
+              favorito: true,
+              enCarrito: 0
             },
             {
               id: 2,
@@ -40,7 +41,8 @@ export default {
               descripcion: 'Hamburguesa doble',
               precio: 200,
               disponibilidad: true,
-              favorito: false
+              favorito: false,
+              enCarrito: 0
             },
             {
               id: 3,
@@ -48,7 +50,8 @@ export default {
               descripcion: 'Hamburguesa triple',
               precio: 300,
               disponibilidad: false,
-              favorito: false
+              favorito: false,
+              enCarrito: 0
             },
             {
               id: 4,
@@ -56,43 +59,35 @@ export default {
               descripcion: 'Hamburguesa triple',
               precio: 300,
               disponibilidad: true,
-              favorito: false
+              favorito: false,
+              enCarrito: 0
             },
         ]
     }
   },
   methods:{
-    // AgregarProducto(id){
-    //   const resul = this.productos.find((prod) => prod.id == id);
-    //   const carr = this.productoCarrito.find((prod) => prod.id == id);
-    //   if (resul.id != carr?.id){
-    //     this.cantidad++
-    //     this.productoCarrito.push(resul)
-    //   }
-    //   else {
-    //     this.productoCarrito.push(resul)
-    //   }
-    // }
     AgregarProducto(id){
       try{
         const res = this.productos.find((prod) => prod.id == id);
-        const bag = this.productoCarrito.find((prod) => prod.id == id);
-        console.log(res)
-        console.log(bag)
-        if (res.id != bag?.id)
-          {
-            this.cantidad++
-            this.productoCarrito.push(res)
-          }
-          else
-          {
-            this.productoCarrito.push(res)
-          }
+        let bag = this.productoCarrito.find((prod) => prod.id == id);
+          if (res.id == bag?.id)
+            {
+              res.enCarrito++
+            }
+            else
+            {
+              this.cantidadcarrito++
+              this.productoCarrito.push(res)
+              res.enCarrito++
+            }
       }
       catch(err){
         console.error(err)
       }
     }
+  },
+  computed:{
+    
   }
 }
 </script>

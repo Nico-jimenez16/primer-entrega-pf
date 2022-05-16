@@ -19,6 +19,7 @@
                       <button v-if="producto.disponibilidad" class="bg-lime-600 p-4 rounded-xl text-white" @click="AddCarrito(producto.id)">Agregar a Carrito</button>
                       <p v-else class="p-4 rounded-xl text-[#dc2626]">Sin Stock</p>
                     </div>
+                    <p>{{producto.enCarrito}}</p>
                 </div> 
             </div>
         </div>
