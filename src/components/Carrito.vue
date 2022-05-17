@@ -40,6 +40,7 @@ export default {
     
   },
   computed:{
+    // eslint-disable-next-line vue/return-in-computed-property
     sumarTotal(){
       this.total = 0
       for(const obj of this.productoCarrito){

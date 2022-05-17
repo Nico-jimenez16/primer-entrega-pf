@@ -55,9 +55,9 @@ export default {
             },
             {
               id: 4,
-              url: 'hamburguesa-triple.jpg',
-              descripcion: 'Hamburguesa triple',
-              precio: 300,
+              url: 'lomito.jpg',
+              descripcion: 'Lomito Completo',
+              precio: 800,
               disponibilidad: true,
               favorito: false,
               enCarrito: 0
@@ -85,9 +85,6 @@ export default {
         console.error(err)
       }
     }
-  },
-  computed:{
-    
   }
 }
 </script>

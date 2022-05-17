@@ -6,7 +6,7 @@
                 <h2 class="text-2xl">{{ titulo }}</h2>
                 <a class="text-xl"><strong></strong>{{ entrega }}</a>
             </div>
-            <div class="flex flex-col w-full flex md:hidden items-end justify-center pr-4">
+            <div class="flex flex-col w-full flex md:hidden items-center justify-center pr-4">
                 <h2 class="text-2xl">{{ titulo }}</h2>
             </div>
         </div>
