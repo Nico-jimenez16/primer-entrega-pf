@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <Header></Header>
-    <Productos :productos="productos" :imgfavorito="imgfavorito" @agregar-al-carrito="AgregarProducto"></Productos>
-    <Carrito :productoCarrito="productoCarrito" :cantidadcarrito="cantidadcarrito"></Carrito>
+    <Header :datos="datos"></Header>
+    <Productos :datos="datos" :productos="productos" :imgfavorito="imgfavorito" @agregar-al-carrito="AgregarProducto" @delete-al-carrito="DeleteCarrito" ></Productos>
+    <Carrito :datos="datos" :total="total" :productoCarrito="productoCarrito"></Carrito>
+    <Login @resultado-del-login="MostrarDatos"></Login>
   </div>
 </template>
 
@@ -10,6 +11,8 @@
 import Header from './components/Header.vue'
 import Productos from './components/Productos.vue'
 import Carrito from './components/Carrito.vue'
+import Login from './components/Login.vue'
+
 
 
 export default {
@@ -17,12 +20,14 @@ export default {
   components: {
     Header,
     Productos,
-    Carrito
+    Carrito,
+    Login
   },
   data(){
     return {
         productoCarrito: [],
-        cantidadcarrito: 0,
+        datos: false,
+        total: 0,
         imgfavorito: 'fav.png',
         productos:
         [
@@ -66,24 +71,84 @@ export default {
     }
   },
   methods:{
+      
+    // AGREGAR PRODUCTO AL CARRITO , SI ESTA SOLO SUMA CANTIDAD Y PRECIO Y SI NO ESTA LO AGREGA
+
     AgregarProducto(id){
       try{
-        const res = this.productos.find((prod) => prod.id == id);
+
+        let res = this.productos.find((prod) => prod.id == id);
         let bag = this.productoCarrito.find((prod) => prod.id == id);
-          if (res.id == bag?.id)
+          if (bag)
             {
-              res.enCarrito++
+              this.total = 0
+              this.productoCarrito.map((producto) => {
+                if(producto.id == bag.id)
+                {
+                  producto.enCarrito++
+                  this.total += producto.enCarrito * producto.precio
+                }
+                else
+                {
+                  this.total += producto.enCarrito * producto.precio
+                }
+              });
+              console.log('Existe en carrito')
             }
             else
             {
-              this.cantidadcarrito++
               this.productoCarrito.push(res)
-              res.enCarrito++
+              this.productoCarrito.map((producto) => {
+                if(producto.id == res.id){
+                  producto.enCarrito++
+                  this.total += producto.enCarrito * producto.precio
+                }
+              });
+              console.log('No existe en carrito')
             }
       }
       catch(err){
         console.error(err)
       }
+    },
+
+    // ELIMINA PRODUCTO DEL CARRITO , SI ESTA MAS DE 1 VES SOLO RESTA CANTIDAD Y PRECIO Y SI ES EL ULTIMO LO ELIMINA DEL ARRAY PRODUCTO EN CARRITO
+
+    DeleteCarrito(id){
+      try{
+
+        let bag = this.productoCarrito.find((prod) => prod.id == id);
+        if (bag){
+          if(bag.enCarrito == 1)
+            {
+                bag.enCarrito--
+                let pos = this.productoCarrito.indexOf(bag)
+                this.productoCarrito.splice(pos , 1)
+                this.total -= bag.precio
+            }
+          else
+            {
+              this.productoCarrito.map((producto) => {
+                if(producto.id == bag.id)
+                {
+                  producto.enCarrito--
+                  this.total -= producto.precio
+                }
+              });
+            }
+        }
+      }
+
+      catch(err){
+        console.error(err)
+      }
+    },
+
+    // FUNCION QUE PONE EL TRUE LA VARIBALE DATOS SI EL LOGIN FUE EXITOSO Y MUESTRA LOS COMPONENTE
+
+    MostrarDatos(res){
+      this.datos = res
+      console.log('Llego bien hasta el Mostrar Datos del App.Vue')
     }
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div class="Header">
+  <div class="Header" v-show="this.datos">
     <div class="bg-lime-300 text-white w-full p-4 h-32 mb-2">
         <div class="flex w-full max-h-32 text-black border-b p-4">
             <div class="flex flex-col w-full hidden md:flex items-start justify-center pr-4">
@@ -24,6 +24,11 @@ export default {
         entrega: 'Esta es la primera entrega - Proyecto final con VueJs CLI'
       }
   },
+  props:{
+    datos: {
+      type: Boolean
+    }
+  }
   
 }
 </script>

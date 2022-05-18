@@ -1,5 +1,5 @@
 <template>
-  <div class="Productos">
+  <div class="Productos" v-show="this.datos">
     <h1 class="text-3xl mt-4">{{ titulo }}</h1>
       <div class="text-black">
         <div class="w-full bg-state-300 p-4 movies mt-2">
@@ -15,9 +15,13 @@
                             <p class="w-full">$ {{ producto.precio }}</p>
                         </div>
                     </div>
-                    <div class="mt-2">
-                      <button v-if="producto.disponibilidad" class="bg-lime-600 p-4 rounded-xl text-white" @click="AddCarrito(producto.id)">Agregar a Carrito</button>
-                      <p v-else class="p-4 rounded-xl text-[#dc2626]">Sin Stock</p>
+                    <div class="flex flex-col mt-2">
+                      <div class="mb-2">
+                        <button v-if="producto.enCarrito != 0" class="bg-lime-600 rounded-full p-2 text-white mr-2" @click="AddCarrito(producto.id)">Sumar</button>
+                        <button v-if="producto.enCarrito != 0" class="bg-lime-600 rounded-full p-2 text-white" @click="DeleteCarrito(producto.id)">Restar</button>
+                      </div>
+                      <button v-if="producto.disponibilidad && producto.enCarrito == 0" class="bg-lime-600 p-4 rounded-xl text-white mb-2" @click="AddCarrito(producto.id)">Agregar a Carrito</button>
+                      <p v-if="!producto.disponibilidad" class="p-4 rounded-xl text-[#dc2626]">Sin Stock</p>
                       <p v-if="producto.enCarrito != 0" class="bg-red-600 w-1/6 rounded-xl text-white">{{producto.enCarrito}}</p>
                     </div>
                 </div> 
@@ -42,14 +46,29 @@ export default {
     },
     imgfavorito:{
       type: String
+    },
+    datos: {
+      type: Boolean
     }
   },
   methods: {
+
+    // FUNCION PARA LEER LAS IMAGENES QUE ESTAN EN ASSETS/IMAGE
+
     getImage(img){
       return require(`@/assets/images/${img}`)
     },
+
+    // FUNCION QUE LE ENVIA EL ID DEL PRODUCTO AL COMPONENTE PADRE APP.VUE PARA SER AGREGADO AL ARRAY DEL CARRITO
+
     AddCarrito(id){
       this.$emit("agregar-al-carrito" , id)
+    },
+
+    // FUNCION QUE LE ENVIA EL ID DEL PRODUCTO AL COMPONENTE PADRE APP.VUE PARA SER ELIMINADO AL ARRAY DEL CARRITO
+
+    DeleteCarrito(id){
+      this.$emit("delete-al-carrito" , id)
     }
   }
   

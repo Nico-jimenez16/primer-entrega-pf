@@ -1,5 +1,5 @@
 <template>
-  <div class="Carrito">
+  <div class="Carrito" v-show="this.datos">
       <div id="bag" class="flex w-20 flex items-center p-2 rounded-xl transition duration-300 ease-in-out bg-white mt-2 mr-2">
         <div class="w-8 h-8 svg">
             <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" version="1.0"  width="1280.000000pt" height="1211.000000pt" viewBox="0 0 1280.000000 1211.000000" preserveAspectRatio="xMidYMid meet">
@@ -11,7 +11,7 @@
             </svg>
         </div>
         <div class="ml-4 textlg flex items-center cantidad">
-            {{ cantidadcarrito }}
+            {{ productoCarrito.length }}
         </div>
       </div>
   </div>
@@ -21,37 +21,22 @@
 <script>
 
 export default {
-  name: 'Carrito',
-  data() {
-      return {
-        total: 0
-      }
-  },
+  name: 'CarritoOne',
   props:{
     productoCarrito:{
       type: Array
     },
-    cantidadcarrito: {
-      type: Number,
-      required: true
-    }
-  },
-  methods:{
-    
-  },
-  computed:{
-    // eslint-disable-next-line vue/return-in-computed-property
-    sumarTotal(){
-      this.total = 0
-      for(const obj of this.productoCarrito){
-        this.total += obj.enCarrito * obj.precio;
-      }
+    total:{
+      type: Number
+    },
+    datos: {
+      type: Boolean
     }
   }
 }
 
 </script>
-    
+
 <style scoped>
 .Carrito{
   display: flex;
