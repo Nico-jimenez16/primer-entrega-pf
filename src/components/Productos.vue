@@ -17,8 +17,8 @@
                     </div>
                     <div class="flex flex-col mt-2">
                       <div class="mb-2">
-                        <button v-if="producto.enCarrito != 0" class="bg-lime-600 rounded-full p-2 text-white mr-2" @click="AddCarrito(producto.id)">Sumar</button>
-                        <button v-if="producto.enCarrito != 0" class="bg-lime-600 rounded-full p-2 text-white" @click="DeleteCarrito(producto.id)">Restar</button>
+                        <button v-if="producto.enCarrito != 0" class="bg-lime-600 rounded-full p-2 text-white mr-2" @click="AddCarrito(producto.id)">Sumar Carrito</button>
+                        <button v-if="producto.enCarrito != 0" class="bg-lime-600 rounded-full p-2 text-white" @click="DeleteCarrito(producto.id)">Restar Carrito</button>
                       </div>
                       <button v-if="producto.disponibilidad && producto.enCarrito == 0" class="bg-lime-600 p-4 rounded-xl text-white mb-2" @click="AddCarrito(producto.id)">Agregar a Carrito</button>
                       <p v-if="!producto.disponibilidad" class="p-4 rounded-xl text-[#dc2626]">Sin Stock</p>

@@ -1,5 +1,19 @@
 # primer-entrega-pf
 
+# Usuarios y Contraseñas
+**
+usuarios:
+    [
+        {
+            nombre: 'Nicolas',
+            password: 12345
+        },
+        {
+            nombre: 'Felipe',
+            password: 123456
+        }
+    ]
+**
 ## Project setup
 ```
 npm install
